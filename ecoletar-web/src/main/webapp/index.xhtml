@@ -1,0 +1,102 @@
+<ui:composition template="/WEB-INF/template/layoutpadrao.xhtml"
+    xmlns="http://www.w3.org/1999/xhtml"
+    xmlns:h="http://java.sun.com/jsf/html"
+    xmlns:f="http://java.sun.com/jsf/core"
+    xmlns:ui="http://java.sun.com/jsf/facelets"
+    xmlns:p="http://primefaces.org/ui">
+
+	<ui:define name="titulo">Ecoletar</ui:define>
+
+	<ui:define name="corpo">
+		<p:commandButton id="showDialogNovo" action="#{entidadeBean.novo}" 
+						 type="button" value="Cadastrar" onclick="PF('dlg_novo').show()" />
+
+		<p:commandButton id="showDialogListar" type="button" value="Listar" onclick="PF('dlg_listar').show()" />
+			
+		<p:dialog header="Cadastrar pontos de coleta" widgetVar="dlg_novo" resizable="false">
+		    <h:form id="form_novo">
+		 
+		        <h:panelGrid columns="2" style="margin-bottom:10px">
+		            <h:inputHidden value="#{entidadeBean.entidade.idEntidade}"/>
+		            <h:inputHidden value="#{entidadeBean.entidade.coleta}"/>
+		            
+		            <h:outputLabel for="nome" value="Nome:" />
+		            <p:inputText id="nome" label="Nome" value="#{entidadeBean.entidade.nome}" size="50"/>
+		            
+		            <h:outputLabel for="telefone" value="Telefone:" />
+		            <p:inputText id="telefone" label="Telefone" value="#{entidadeBean.entidade.telefone}" size="15"/>
+
+		            <h:outputLabel for="fax" value="Fax:" />
+		            <p:inputText id="fax" label="Fax" value="#{entidadeBean.entidade.fax}" size="15"/>
+
+		            <h:outputLabel for="contato" value="Contato:" />
+		            <p:inputText id="contato" label="Contato" value="#{entidadeBean.entidade.contato}" size="50"/>
+		            
+		            <h:outputLabel for="email" value="E-mail:" />
+		            <h:panelGroup>
+		            	<h:inputText id="email" label="E-mail" value="#{entidadeBean.entidade.email}"
+		            				 size="50" maxlength="50" required="true" validatorMessage="E-mail inválido">
+		            	<f:validateRegex pattern="[a-zA-Z0-9\-\_\.]+@[a-zA-Z0-9\-\_\.]+"/>	
+		            	</h:inputText>
+		            	<h:message for="email"/>		 
+		            </h:panelGroup>
+
+		            <h:outputLabel for="website" value="Website:" />
+		            <p:inputText id="website" label="Website" value="#{entidadeBean.entidade.website}" size="50"/>
+		            
+		            <h:outputLabel for="observacao" value="Observação:" />
+		            <p:inputTextarea id="observacao" rows="20" cols="50" label="Observação" value="#{entidadeBean.entidade.observacao}" 
+		            				 size="500" maxlength="500" counterTemplate="{0} caracteres restantes." autoResize="false"/>		            					            
+		        </h:panelGrid>
+		 
+		        <h:commandButton action="#{entidadeBean.salvar}" value="Salvar"/>     
+		    </h:form>
+		</p:dialog>
+
+		<p:dialog header="Listar pontos de coleta" widgetVar="dlg_listar" resizable="false">
+		    <h:form id="form_listar">
+		 		<h:dataTable value="#{entidadeBean.lista}" var="entidade" rules="rows" cellpadding="20">
+		 			<f:facet name="caption">
+		 				A listagem abaixo exibe todos os pontos de coleta cadastrados.
+		 			</f:facet>
+		 			<f:facet name="header">Listagem de Pontos de Coletas</f:facet>
+		 			<f:facet name="footer">Final da listagem</f:facet>
+		 			<h:column>
+		 				<f:facet name="header">Nome</f:facet>
+		 				<h:outputText value="#{entidade.nome}"/> 
+		 			</h:column>
+		 			<h:column>
+		 				<f:facet name="header">Telefone</f:facet>
+		 				<h:outputText value="#{entidade.telefone}"/>
+		 			</h:column>
+		 			<h:column>
+		 				<f:facet name="header">Fax</f:facet>
+		 				<h:outputText value="#{entidade.fax}"/>
+		 			</h:column>
+		 			<h:column>
+		 				<f:facet name="header">Contato</f:facet>
+		 				<h:outputText value="#{entidade.contato}"/>
+		 			</h:column>
+		 			<h:column>
+		 				<f:facet name="header">E-mail</f:facet>
+		 				<h:outputText value="#{entidade.email}"/>
+		 			</h:column>
+		 			<h:column>
+		 				<f:facet name="header">Website</f:facet>
+		 				<h:outputText value="#{entidade.website}"/>
+		 			</h:column>
+		 			<h:column>
+		 				<f:facet name="header">Data Cadastro</f:facet>
+		 				<h:outputText value="#{entidade.dataCadastro}"/>
+		 			</h:column>		 			
+		 			<h:column>
+		 				<f:facet name="header">Observação</f:facet>
+		 				<h:outputText value="#{entidade.observacao}"/>
+		 			</h:column>		 			
+		 		</h:dataTable>
+		    </h:form>
+		</p:dialog>
+		
+	</ui:define>
+
+</ui:composition>
